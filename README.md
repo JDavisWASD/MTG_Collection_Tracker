@@ -32,7 +32,8 @@ Data Plan:
 - Bulid a table of users as they register
 - ~~Have a pre-built table of existing cards and their information~~ (Way to big)
 - Build a table of cards as users search for them
-- Check card searches against .json from MTGJSON
+- ~~Check card searches against .json from MTGJSON~~ (Needlessly complicated)
+- Search for cards against Scryfall API
 - Connect both tables in a many to many relationship based on user input
 
 Future Features:
