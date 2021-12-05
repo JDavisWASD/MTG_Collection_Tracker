@@ -212,5 +212,4 @@ cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/flask,python
 
-/flask_app/static/AtomicCardsPretty.json
 wireframe.png
