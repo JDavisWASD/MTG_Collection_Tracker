@@ -12,12 +12,10 @@
 
 <body>
     <h1>$SITE_TITLE</h1>
-    <form id="searchForm" onsubmit="search(event)">
-        <input type="search" name="query">
+    <form action="/search" method="POST">
+        <input type="text" name="query">
         <input type="submit" value="Search">
     </form>
 </body>
-
-<script type="text/javascript" src="{{ url_for('static', filename = 'script.js') }}"></script>
 
 </html>
