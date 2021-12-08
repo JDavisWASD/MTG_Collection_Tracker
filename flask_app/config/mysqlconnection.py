@@ -38,7 +38,7 @@ class MySQLConnection:
             #If the query fails the method will return False
             except Exception as error:
                 print("Something went wrong", error)
-                return false
+                return False
             finally:
                 self.connection.close()
 

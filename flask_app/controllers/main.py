@@ -11,6 +11,8 @@ def index():
 def displayCard():
     return render_template('displayCard.html', cardInfo = session['lastSearch'])
 
+#TODO: handle failed searches
+
 @app.route('/search', methods = ['POST'])
 def search():
     result = requests.get(f"https://api.scryfall.com/cards/named?exact={request.form['name']}&set={request.form['set']}")
