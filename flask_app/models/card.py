@@ -1,3 +1,5 @@
+import requests
+
 from flask_app.config.mysqlconnection import connectToMySQL
 
 class Card:
@@ -62,3 +64,33 @@ class Card:
             return cls(result[0])
 
         return False
+
+    @staticmethod
+    def search_api(name, set_code):
+        result = requests.get(f"https://api.scryfall.com/cards/named?exact={name}&set={set_code}")
+        result = result.json()
+
+        if result['object'] == 'error':
+            return False
+
+        data = {
+            'image': result['image_uris']['normal'],
+            'name': result['name'],
+            'set_code': result['set'],
+            'type': result['type_line'],
+            'cost': result['mana_cost'],
+            'description': result['oracle_text'],
+            'usd': result['prices']['usd'],
+            'usd_foil': result['prices']['usd_foil'],
+            'usd_etched': result['prices']['usd_etched'],
+            'eur': result['prices']['eur'],
+            'eur_foil': result['prices']['eur'],
+            'tix': result['prices']['tix']
+        }
+
+        if 'power' in result:
+            data['power'] = result['power']
+        if 'toughness' in result:
+            data['toughness'] = result['toughness']
+
+        return data

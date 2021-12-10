@@ -1,4 +1,3 @@
-import requests
 import time
 
 from datetime import datetime, timedelta
@@ -15,21 +14,37 @@ def collection():
     if 'user_id' not in session:
         return redirect('/')
 
-    session['error_redirect'] = '/collection'
     return render_template('collection.html')
 
 @app.route('/search', methods = ['POST'])
 def search():
-    session['lastSearch'] = search_api(request.form['name'], request.form['set_code'])
+    session['lastSearch'] = Card.search_api(request.form['name'], request.form['set_code'])
+    if session['lastSearch'] == False:
+        if request.form['set_code'] == '':
+            flash(f"{request.form['name'].title()} was not found.")
+            return redirect('/')
+        
+        flash(f"{request.form['name'].title()} from {request.form['set_code'].upper()} was not found.")
+        return redirect('/')
+
     return redirect('/card')
 
 @app.route('/add_card', methods = ['POST'])
 def add_card():
     existing_card = Card.get_by_name_and_set(request.form['name'], request.form['set_code'])
     if not existing_card:
-        card_id = Card.save(search_api(request.form['name'], request.form['set_code']))
+        data = Card.search_api(request.form['name'], request.form['set_code'])
+        if not data:
+            if request.form['set_code'] == '':
+                flash(f"{request.form['name'].title()} was not found.")
+                return redirect('/collection')
+        
+            flash(f"{request.form['name'].title()} from {request.form['set_code'].upper()} was not found.")
+            return redirect('/collection')
+
+        card_id = Card.save(data)
     elif datetime.now() - existing_card.updated_at >= timedelta(hours = 24):
-        data = search_api(existing_card.name, existing_card.set_code)
+        data = Card.search_api(existing_card.name, existing_card.set_code)
         data['card_id'] = existing_card.id
         Card.update(data)
 
@@ -37,34 +52,3 @@ def add_card():
         pass
 
     return redirect('/collection')
-
-def search_api(name, set_code):
-    result = requests.get(f"https://api.scryfall.com/cards/named?exact={name}&set={set_code}")
-    result = result.json()
-
-    if result['object'] == 'error':
-#        flash(f"{name.title()} from {set_code.upper()} was not found.")
-        flash('No card found')
-        return redirect('/collection')
-
-    data = {
-        'image': result['image_uris']['normal'],
-        'name': result['name'],
-        'set_code': result['set'],
-        'type': result['type_line'],
-        'cost': result['mana_cost'],
-        'description': result['oracle_text'],
-        'usd': result['prices']['usd'],
-        'usd_foil': result['prices']['usd_foil'],
-        'usd_etched': result['prices']['usd_etched'],
-        'eur': result['prices']['eur'],
-        'eur_foil': result['prices']['eur'],
-        'tix': result['prices']['tix']
-    }
-
-    if 'power' in result:
-        data['power'] = result['power']
-    if 'toughness' in result:
-        data['toughness'] = result['toughness']
-
-    return data
