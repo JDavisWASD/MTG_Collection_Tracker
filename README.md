@@ -45,3 +45,4 @@ Future Features:
 - Split table into pages
 - Make Login and Registartion popups/overlays instead of individual pages
 - Switch to pulling prices from retailers directly to get more reliable prices
+- Make the error message for adding a specific card specify style in collection

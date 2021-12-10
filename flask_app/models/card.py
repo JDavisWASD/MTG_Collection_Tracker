@@ -51,20 +51,6 @@ class Card:
 
         return False
 
-    @classmethod
-    def get_card_from_collection(cls, card_id, user_id):
-        data = {
-            'card_id': card_id,
-            'user_id': user_id
-        }
-        query = 'SELECT * FROM cards LEFT JOIN collections ON ' \
-            'card_id = %(card_id)s WHERE user_id = %(user_id)s;'
-        result = connectToMySQL(cls.DATABASE).query_db(query, data)
-        if result:
-            return cls(result[0])
-
-        return False
-
     @staticmethod
     def search_api(name, set_code):
         result = requests.get(f"https://api.scryfall.com/cards/named?exact={name}&set={set_code}")
