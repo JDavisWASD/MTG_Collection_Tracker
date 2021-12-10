@@ -5,6 +5,11 @@ from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
 
+@app.route('/')
+def index():
+    session['error_redirect'] = '/'
+    return render_template('index.html')
+
 @app.route('/registration')
 def registration():
     return render_template('registration.html')
@@ -43,10 +48,3 @@ def attempt_login():
 def logout():
     session.pop('user_id')
     return redirect('/')
-
-@app.route('/collection')
-def collection():
-    if 'user_id' not in session:
-        return redirect('/')
-
-    return render_template('collection.html')

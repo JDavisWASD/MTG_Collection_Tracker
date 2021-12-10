@@ -31,9 +31,9 @@ Collection Page:
 Data Plan:
 - Bulid a table of users as they register
 - ~~Have a pre-built table of existing cards and their information~~ (Way to big)
-- Build a table of cards as users search for them
-- ~~Check card searches against .json from MTGJSON~~ (Needlessly complicated)
+- ~~Check card searches against .json from MTGJSON~~ (Still really big)
 - Search for cards against Scryfall API
+- Build a table of cards as users search for them
 - Connect both tables in a many to many relationship based on user input
 
 Future Features:
@@ -44,3 +44,4 @@ Future Features:
 - Sort by table column
 - Split table into pages
 - Make Login and Registartion popups/overlays instead of individual pages
+- Switch to pulling prices from retailers directly to get more reliable prices

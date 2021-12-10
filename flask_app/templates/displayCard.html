@@ -40,51 +40,51 @@
                 <tr>
                     <th>Normal</th>
                     <td>
-                        {% if cardInfo.prices.usd == None %}
+                        {% if cardInfo.usd == None %}
                             N/A
                         {% else %}
-                            ${{ cardInfo.prices.usd }}
+                            ${{ cardInfo.usd }}
                         {% endif %}
                     </td>
                     <td>
-                        {% if cardInfo.prices.eur == None %}
+                        {% if cardInfo.eur == None %}
                             N/A
                         {% else %}
-                            €{{ cardInfo.prices.eur }}
+                            €{{ cardInfo.eur }}
                         {% endif %}
                     </td>
                     <td>
-                        {% if cardInfo.prices.tix == None %}
+                        {% if cardInfo.tix == None %}
                             N/A
                         {% else %}
-                            {{ cardInfo.prices.tix }}
+                            {{ cardInfo.tix }}
                         {% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th>Foil</th>
                     <td>
-                        {% if cardInfo.prices.usd_foil == None %}
+                        {% if cardInfo.usd_foil == None %}
                             N/A
                         {% else %}
-                            ${{ cardInfo.prices.usd_foil }}
+                            ${{ cardInfo.usd_foil }}
                         {% endif %}
                     </td>
                     <td>
-                        {% if cardInfo.prices.eur_foil == None %}
+                        {% if cardInfo.eur_foil == None %}
                             N/A
                         {% else %}
-                            €{{ cardInfo.prices.eur_foil }}
+                            €{{ cardInfo.eur_foil }}
                         {% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th>Etched</th>
                     <td>
-                        {% if cardInfo.prices.usd_etched == None %}
+                        {% if cardInfo.usd_etched == None %}
                             N/A
                         {% else %}
-                            ${{ cardInfo.prices.usd_etched }}
+                            ${{ cardInfo.usd_etched }}
                         {% endif %}
                     </td>
                 </tr>

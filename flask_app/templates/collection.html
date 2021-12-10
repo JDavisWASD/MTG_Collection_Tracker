@@ -9,8 +9,38 @@
 </head>
 
 <body>
+    <form action="/add_card" method="POST">
+        <input type="number" name="quantity" value="1" min="1">
+        <select name="style">
+            <option value="0">Normal</option>
+            <option value="1">Foil</option>
+            <option value="2">Etched</option>
+        </select>
+        <input type="text" name="name" placeholder="Card Name">
+        <input type="text" name="set_code" placeholder="Set Code (Optional)">
+        <input type="submit" value="Add">
+    </form>
     <a href="/logout">Logout</a>
-    <h1>Successfully logged in</h1>
+    <table>
+        <tr>
+            <th>Quantity</th>
+            <th>Style</th>
+            <th>Name</th>
+            <th>Set</th>
+            <th>Type</th>
+            <th>Cost</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Foil</td>
+            <td>Llanowar Elves</td>
+            <td>M10</td>
+            <td>Creature — Elf Druid</td>
+            <td>{G}</td>
+            <td>$42</td>
+        </tr>
+    </table>
 </body>
 
 </html>
