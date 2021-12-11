@@ -27,6 +27,16 @@ class User:
         return False
 
     @classmethod
+    def get_by_id(cls, id):
+        data = {'id': id}
+        query = 'SELECT * FROM users WHERE id = %(id)s;'
+        result = connectToMySQL(cls.DATABASE).query_db(query, data)
+        if result:
+            return cls(result[0])
+
+        return False
+
+    @classmethod
     def save(cls, data):
         query = 'INSERT INTO users (username, email, password, created_at, ' \
             'updated_at) VALUES (%(username)s, %(email)s, %(password)s, NOW(),'\

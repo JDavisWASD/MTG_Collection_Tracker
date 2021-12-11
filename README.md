@@ -21,7 +21,6 @@ Registration Page:
 Collection Page:
 - Display total quantity of cards
 - Display number of unique cards
-- Display total price of all cards
 - Table of cards in collection
     - Add cards
     - Remove cards
@@ -37,12 +36,15 @@ Data Plan:
 - Connect both tables in a many to many relationship based on user input
 
 Future Features:
+- Dark mode
 - Export/Import via CSV
 - Ability to subdivide a collection into multiple decks of cards
 - Password reset
-- Specify printing edition of cards
+- ~~Specify printing edition of cards~~
 - Sort by table column
 - Split table into pages
 - Make Login and Registartion popups/overlays instead of individual pages
 - Switch to pulling prices from retailers directly to get more reliable prices
 - Make the error message for adding a specific card specify style in collection
+- Selecting which currency to display
+- Display total price of all cards

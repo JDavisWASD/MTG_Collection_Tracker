@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$USER'S Collection</title>
+    <title>{{ username }}'s Collection</title>
 </head>
 
 <body>
@@ -30,6 +30,10 @@
         <input type="submit" value="Add">
     </form>
     <a href="/logout">Logout</a>
+    <div>
+        <h2>{{ username }}'s Collection ({{ total }} cards with {{ unique }} unique)</h2>
+        <input type="submit" form="update" value="Update">
+    </div>
     <table>
         <tr>
             <th>Quantity</th>
@@ -40,15 +44,36 @@
             <th>Cost</th>
             <th>Price</th>
         </tr>
-        <tr>
-            <td>4</td>
-            <td>Foil</td>
-            <td>Llanowar Elves</td>
-            <td>M10</td>
-            <td>Creature — Elf Druid</td>
-            <td>{G}</td>
-            <td>$42</td>
-        </tr>
+        <form action="/update" method="POST" id="update">
+            {% for i in range(collection_length) %}
+                <tr>
+                    <td><input type="text" name="{{ i }}_quantity" value="{{ collection[i]['quantity'] }}"></td>
+                    <input type="hidden" name="{{ i }}_style" value="{{ collection[i]['style'] }}">
+                    <td>
+                        {% if collection[i]['style'] == 0 %}
+                            Normal
+                        {% elif collection[i]['style'] == 1 %}
+                            Foil
+                        {% else %}
+                            Etched
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ url_for('display_from_collection', name = collection[i]['name'], set_code = collection[i]['set_code']) }}">{{ collection[i]['name'] }}</a></td>
+                    <td>{{ collection[i]['set_code'].upper() }}</td>
+                    <td>{{ collection[i]['type'] }}</td>
+                    <td>{{ collection[i]['cost'] }}</td>
+                    <td>
+                        {% if collection[i]['style'] == 0 %}
+                            {{ collection[i]['usd'] }}
+                        {% elif collection[i]['style'] == 1 %}
+                            {{ collection[i]['usd_foil'] }}
+                        {% else %}
+                            {{ collection[i]['usd_etched'] }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </form>
     </table>
 </body>
 

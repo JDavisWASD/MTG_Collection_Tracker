@@ -1,21 +1,49 @@
-import time
-
 from datetime import datetime, timedelta
+from time import sleep
 from flask import flash, redirect, render_template, request, session
 from flask_app import app
 from flask_app.models.card import Card
 from flask_app.models.collection import Collection
+from flask_app.models.user import User
 
 @app.route('/card')
 def displayCard():
-    return render_template('displayCard.html', cardInfo = session['lastSearch'])
+    logged_in = False
+    if 'user_id' in session:
+        logged_in = True
+    return render_template('displayCard.html', cardInfo = session['lastSearch'], logged_in = logged_in)
 
 @app.route('/collection')
 def collection():
     if 'user_id' not in session:
         return redirect('/')
 
-    return render_template('collection.html')
+    out_of_date = False
+    collection = Collection.get_all_cards(session['user_id'])
+
+    for card in collection:
+        if datetime.now() - card['cards.updated_at'] >= timedelta(hours = 24):
+            out_of_date = True
+            data = Card.search_api(card['name'], card['set_code'])
+            data['card_id'] = card['card_id']
+            Card.update(data)
+
+            #Scryfall API asks for a 100 milliseconds of delay between requests
+            sleep(0.1)
+
+    if out_of_date:
+        collection = Collection.get_all_cards(session['user_id'])
+
+    return render_template('collection.html', collection = collection, \
+        collection_length = len(collection), \
+        total = Collection.get_num_total(session['user_id']), \
+        unique = Collection.get_num_unique(session['user_id']), \
+        username = User.get_by_id(session['user_id']).username)
+
+@app.route('/display/<set_code>/<name>')
+def display_from_collection(name, set_code):
+    session['lastSearch'] = Card.search_api(name, set_code)
+    return redirect('/card')
 
 @app.route('/search', methods = ['POST'])
 def search():
@@ -69,7 +97,18 @@ def add_card():
         }
         Collection.save(data)
     else:
-        flash(f"You already have a that style of {request.form['name'].title()} in your collection.")
+        flash(f"You already have that style of {request.form['name'].title()} in your collection.")
         return redirect('/collection')
+
+    return redirect('/collection')
+
+@app.route('/update', methods = ['POST'])
+def update():
+    collection = Collection.get_all_cards(session['user_id'])
+    for i in range(len(collection)):
+        if request.form[f"{i}_quantity"] == "0":
+            Collection.delete(collection[i]['card_id'], collection[i]['style'])
+        elif request.form[f"{i}_quantity"] != collection[i]['quantity']:
+            Collection.update(collection[i]['card_id'], collection[i]['style'], request.form[f"{i}_quantity"])
 
     return redirect('/collection')

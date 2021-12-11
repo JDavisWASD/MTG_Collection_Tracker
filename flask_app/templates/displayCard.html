@@ -11,6 +11,29 @@
 </head>
 
 <body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+    <form action="/search" method="POST">
+        <div>
+            <input type="text" name="name" placeholder="Card Name">
+            <input type="text" name="set_code" placeholder="Set Code (Optional)">
+            <input type="submit" value="Search">
+        </div>
+    </form>
+    {% if logged_in %}
+        <a href="/collection">My Collection</a>
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/registration">Register</a>
+        <a href="/login">Login</a>
+    {% endif %}
     <div class="d-flex">
         <img src="{{ cardInfo.image }}" alt="">
         <div class="card">

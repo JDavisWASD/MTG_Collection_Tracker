@@ -7,7 +7,9 @@ bcrypt = Bcrypt(app)
 
 @app.route('/')
 def index():
-    session['error_redirect'] = '/'
+    if 'user_id' in session:
+        session.pop('user_id')
+
     return render_template('index.html')
 
 @app.route('/registration')
@@ -24,7 +26,7 @@ def register():
         'email': request.form['email'],
         'password': bcrypt.generate_password_hash(request.form['password'])
     }
-    user_id = User.save(data)
+    session['user_id'] = User.save(data)
     return redirect('/collection')
 
 @app.route('/login')
