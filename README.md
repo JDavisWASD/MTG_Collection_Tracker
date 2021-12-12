@@ -40,7 +40,7 @@ Future Features:
 - Export/Import via CSV
 - Ability to subdivide a collection into multiple decks of cards
 - Password reset
-- ~~Specify printing edition of cards~~
+- ~~Specify printing edition of cards~~ (Done)
 - Sort by table column
 - Split table into pages
 - Make Login and Registartion popups/overlays instead of individual pages
@@ -48,3 +48,4 @@ Future Features:
 - Make the error message for adding a specific card specify style in collection
 - Selecting which currency to display
 - Display total price of all cards
+- Support split and double face cards

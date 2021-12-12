@@ -9,7 +9,7 @@ bcrypt = Bcrypt(app)
 def index():
     if 'user_id' in session:
         session.pop('user_id')
-
+    session['error_redirect'] = '/'
     return render_template('index.html')
 
 @app.route('/registration')

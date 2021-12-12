@@ -11,6 +11,8 @@ def displayCard():
     logged_in = False
     if 'user_id' in session:
         logged_in = True
+
+    session['error_redirect'] = '/card'
     return render_template('displayCard.html', cardInfo = session['lastSearch'], logged_in = logged_in)
 
 @app.route('/collection')
@@ -47,15 +49,20 @@ def display_from_collection(name, set_code):
 
 @app.route('/search', methods = ['POST'])
 def search():
-    session['lastSearch'] = Card.search_api(request.form['name'], request.form['set_code'])
-    if session['lastSearch'] == False:
+    if request.form['name'] == '':
+        flash("A card name is required to search.")
+        return redirect(session['error_redirect'])
+
+    result = Card.search_api(request.form['name'], request.form['set_code'])
+    if result == False:
         if request.form['set_code'] == '':
             flash(f"{request.form['name'].title()} was not found.")
-            return redirect('/')
+            return redirect(session['error_redirect'])
         
         flash(f"{request.form['name'].title()} from {request.form['set_code'].upper()} was not found.")
-        return redirect('/')
+        return redirect(session['error_redirect'])
 
+    session['lastSearch'] = result
     return redirect('/card')
 
 @app.route('/add_card', methods = ['POST'])

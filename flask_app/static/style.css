@@ -1,0 +1,38 @@
+@font-face {
+    font-family: 'beleren';
+    src: url(./Beleren2016-Bold.woff);
+}
+
+body {
+    background-color: #dddddd;
+}
+
+h1 {
+    font-family: beleren;
+    margin-top: 25%;
+}
+
+h2 {
+    margin-top: 25%;
+}
+
+.alert-primary {
+    background-color: #ecb365;
+    border: #ecb365;
+    color: #8d6b3c;
+}
+
+.btn-primary {
+    background-color: #30475e;
+    border-color: #30475e;
+}
+
+.btn-secondary {
+    background-color: #222831;
+    border-color: #222831;
+    margin-left: 10px;
+}
+
+.card {
+    background-color: #dddddd;
+}
