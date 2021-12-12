@@ -92,11 +92,11 @@
                                 <td>{{ collection[i]['cost'] }}</td>
                                 <td>
                                     {% if collection[i]['style'] == 0 %}
-                                        {{ collection[i]['usd'] }}
+                                        ${{ collection[i]['usd'] }}
                                     {% elif collection[i]['style'] == 1 %}
-                                        {{ collection[i]['usd_foil'] }}
+                                        ${{ collection[i]['usd_foil'] }}
                                     {% else %}
-                                        {{ collection[i]['usd_etched'] }}
+                                        ${{ collection[i]['usd_etched'] }}
                                     {% endif %}
                                 </td>
                             </tr>
