@@ -1,5 +1,6 @@
 import requests
 
+from flask import flash
 from flask_app.config.mysqlconnection import connectToMySQL
 
 class Card:
@@ -57,6 +58,9 @@ class Card:
         result = result.json()
 
         if result['object'] == 'error':
+            return False
+        if 'image_uris' not in result or 'oracle_text' not in result:
+            flash('Split and double faced cards are not currently supported.')
             return False
 
         data = {
