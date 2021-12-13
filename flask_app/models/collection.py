@@ -22,7 +22,8 @@ class Collection:
             'card_id': card_id,
             'style': style
         }
-        query = 'UPDATE collections SET quantity = %(quantity)s WHERE card_id = %(card_id)s AND style = %(style)s;'
+        query = 'UPDATE collections SET quantity = %(quantity)s WHERE ' \
+            'card_id = %(card_id)s AND style = %(style)s;'
         connectToMySQL(cls.DATABASE).query_db(query, data)
 
     @classmethod
@@ -31,7 +32,8 @@ class Collection:
             'card_id': card_id,
             'style': style
         }
-        query = 'DELETE FROM collections WHERE card_id = %(card_id)s AND style = %(style)s;'
+        query = 'DELETE FROM collections WHERE card_id = %(card_id)s AND ' \
+            'style = %(style)s;'
         connectToMySQL(cls.DATABASE).query_db(query, data)
 
     @classmethod

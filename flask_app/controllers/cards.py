@@ -13,7 +13,8 @@ def displayCard():
         logged_in = True
 
     session['error_redirect'] = '/card'
-    return render_template('displayCard.html', cardInfo = session['lastSearch'], logged_in = logged_in)
+    return render_template('displayCard.html', \
+        cardInfo = session['lastSearch'], logged_in = logged_in)
 
 @app.route('/collection')
 def collection():
@@ -59,7 +60,8 @@ def search():
             flash(f"{request.form['name'].title()} was not found.")
             return redirect(session['error_redirect'])
         
-        flash(f"{request.form['name'].title()} from {request.form['set_code'].upper()} was not found.")
+        flash(f"{request.form['name'].title()} from " \
+            f"{request.form['set_code'].upper()} was not found.")
         return redirect(session['error_redirect'])
 
     session['lastSearch'] = result
@@ -67,7 +69,8 @@ def search():
 
 @app.route('/add_card', methods = ['POST'])
 def add_card():
-    card_in_database = Card.get_by_name_and_set(request.form['name'], request.form['set_code'])
+    card_in_database = Card.get_by_name_and_set(request.form['name'], \
+        request.form['set_code'])
     card_id = 0
 
     #Add card to database
@@ -78,7 +81,8 @@ def add_card():
                 flash(f"{request.form['name'].title()} was not found.")
                 return redirect('/collection')
         
-            flash(f"{request.form['name'].title()} from {request.form['set_code'].upper()} was not found.")
+            flash(f"{request.form['name'].title()} from " \
+                f"{request.form['set_code'].upper()} was not found.")
             return redirect('/collection')
         card_id = Card.save(data)
 
@@ -95,7 +99,8 @@ def add_card():
     card_in_collection = Collection.get_by_ids(card_id, session['user_id'])
 
     #Add card to user's collection
-    if not card_in_collection or request.form['style'] != str(card_in_collection.style):
+    if not card_in_collection or request.form['style'] != \
+            str(card_in_collection.style):
         data = {
             'user_id': session['user_id'],
             'card_id': card_id,
@@ -104,7 +109,8 @@ def add_card():
         }
         Collection.save(data)
     else:
-        flash(f"You already have that style of {request.form['name'].title()} in your collection.")
+        flash(f"You already have that style of " \
+            f"{request.form['name'].title()} in your collection.")
         return redirect('/collection')
 
     return redirect('/collection')
@@ -116,6 +122,7 @@ def update():
         if request.form[f"{i}_quantity"] == "0":
             Collection.delete(collection[i]['card_id'], collection[i]['style'])
         elif request.form[f"{i}_quantity"] != collection[i]['quantity']:
-            Collection.update(collection[i]['card_id'], collection[i]['style'], request.form[f"{i}_quantity"])
+            Collection.update(collection[i]['card_id'], collection[i]['style'],\
+                request.form[f"{i}_quantity"])
 
     return redirect('/collection')
