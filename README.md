@@ -48,4 +48,4 @@ Future Features:
 - Make the error message for adding a specific card specify style in collection
 - Selecting which currency to display
 - Display total price of all cards
-- Support split and double face cards
+- Search for and display backsides of transform and MDFC cards
