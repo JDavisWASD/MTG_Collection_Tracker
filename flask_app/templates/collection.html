@@ -86,7 +86,7 @@
                                     {% endif %}
                                     <input type="hidden" name="{{ i }}_style" value="{{ collection[i]['style'] }}">
                                 </td>
-                                <td><a href="{{ url_for('display_from_collection', name = collection[i]['name'], set_code = collection[i]['set_code']) }}">{{ collection[i]['name'] }}</a></td>
+                                <td><a href="{{ url_for('display_from_collection', name = collection[i]['name'].split('/')[0], set_code = collection[i]['set_code']) }}">{{ collection[i]['name'] }}</a></td>
                                 <td>{{ collection[i]['set_code'].upper() }}</td>
                                 <td>{{ collection[i]['type'] }}</td>
                                 <td>{{ collection[i]['cost'] }}</td>
