@@ -59,17 +59,10 @@ class Card:
 
         if result['object'] == 'error':
             return False
-        if 'image_uris' not in result or 'oracle_text' not in result:
-            flash('Split and double faced cards are not currently supported.')
-            return False
 
         data = {
-            'image': result['image_uris']['normal'],
             'name': result['name'],
             'set_code': result['set'],
-            'type': result['type_line'],
-            'cost': result['mana_cost'],
-            'description': result['oracle_text'],
             'usd': result['prices']['usd'],
             'usd_foil': result['prices']['usd_foil'],
             'usd_etched': result['prices']['usd_etched'],
@@ -78,9 +71,41 @@ class Card:
             'tix': result['prices']['tix']
         }
 
-        if 'power' in result:
-            data['power'] = result['power']
-        if 'toughness' in result:
-            data['toughness'] = result['toughness']
+        #Probably a better way to do this
+        if result['layout'] == 'flip' or result['layout'] == 'split':
+            data['image'] = result['image_uris']['normal']
+            data['type'] = result['type_line']
+            data['cost'] = result['mana_cost']
+            data['description'] = result['card_faces'][0]['oracle_text']
+            data['description_2'] = result['card_faces'][1]['oracle_text']
+            if 'power' in result['card_faces'][0]:
+                data['power'] = result['card_faces'][0]['power']
+            if 'power' in result['card_faces'][1]:
+                data['power_2'] = result['card_faces'][1]['power']
+            if 'toughness' in result['card_faces'][0]:
+                data['toughness'] = result['card_faces'][0]['toughness']
+            if 'toughness' in result['card_faces'][1]:
+                data['toughness_2'] = result['card_faces'][1]['toughness']
+        elif result['layout'] == 'transform' or result['layout'] == 'modal_dfc':
+            data['image'] = result['card_faces'][0]['image_uris']['normal']
+            data['type'] = result['card_faces'][0]['type_line']
+            data['cost'] = result['card_faces'][0]['mana_cost']
+            data['description'] = result['card_faces'][0]['oracle_text']
+            if 'power' in result['card_faces'][0]:
+                data['power'] = result['card_faces'][0]['power']
+            if 'toughness' in result['card_faces'][0]:
+                data['toughness'] = result['card_faces'][0]['toughness']
+        elif result['layout'] == 'normal':
+            data['image'] = result['image_uris']['normal']
+            data['type'] = result['type_line']
+            data['cost'] = result['mana_cost']
+            data['description'] = result['oracle_text']
+            if 'power' in result:
+                data['power'] = result['power']
+            if 'toughness' in result:
+                data['toughness'] = result['toughness']
+        else:
+            flash('That card\'s layou is not currently supported.')
+            return False
 
         return data

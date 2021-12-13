@@ -69,6 +69,17 @@
                         <p>{{ cardInfo.power }}/{{ cardInfo.toughness }}</p>
                         <hr>
                     {% endif %}
+                    {% if 'description_2' in cardInfo %}
+                        {% set list = cardInfo.description_2.split('\n') %}
+                        {% for para in list %}
+                            <p class="card-text">{{ para }}</p>
+                        {% endfor %}
+                        <hr>
+                        {% if 'power_2' in cardInfo %}
+                            <p>{{ cardInfo.power_2 }}/{{ cardInfo.toughness_2 }}</p>
+                            <hr>
+                        {% endif %}
+                    {% endif %}
                     <table class="table">
                         <thead>
                             <tr>
