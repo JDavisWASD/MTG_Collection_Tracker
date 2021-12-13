@@ -49,3 +49,4 @@ Future Features:
 - Selecting which currency to display
 - Display total price of all cards
 - Search for and display backsides of transform and MDFC cards
+- Replace text descriptions of symbols with the correct images
