@@ -40,10 +40,12 @@ class Card:
 
     @classmethod
     def get_by_name_and_set(cls, name, set_code):
-        data = {
-            'name': name,
-            'set_code': set_code
-        }
+        data = {'name': name}
+        if set_code == '':
+            data['set_code'] = Card.search_api(name, set_code)['set_code']
+        else:
+            data['set_code'] = set_code
+
         query = 'SELECT * FROM cards WHERE name = %(name)s AND ' \
             'set_code = %(set_code)s;'
         result = connectToMySQL(cls.DATABASE).query_db(query, data)
