@@ -1,4 +1,5 @@
-A website that allows users to catalog their collection of Magic: The Gathering cards and see the average prices of said cards from 1-2 external websites via APIs.
+## MTG Collection Tracker
+A MVP of a website that allows users to catalog their collection of Magic: The Gathering cards, search a database of cards, and view the daily prices of cards. The project was built using Python, Flask, MySQL, and the Scryfall.com API.
 
 Landing Page:
 - Login and Register Buttons
@@ -7,16 +8,16 @@ Landing Page:
 Search Result:
 - Individual card search w/o login
 - Display card result:
-    - Image of Card
-    - Card Name
-    - Card Description
+    - Image of card
+    - Card name
+    - Card description
     - Prices
 
 Login Page:
-- Username and password input w/ validations
+- Username and password input with validations
 
 Registration Page:
-- Username, email, password, and confirmation w/ validations/regex
+- Username, email, password, and password confirmation with validations
 
 Collection Page:
 - Display total quantity of cards
@@ -25,28 +26,10 @@ Collection Page:
     - Add cards
     - Remove cards
     - Edit quantity
-    - Clicking card name uses search result page to display full card info
+    - Clicking card name uses the search result page to display full card info
 
 Data Plan:
 - Bulid a table of users as they register
-- ~~Have a pre-built table of existing cards and their information~~ (Way to big)
-- ~~Check card searches against .json from MTGJSON~~ (Still really big)
 - Search for cards against Scryfall API
-- Build a table of cards as users search for them
+- Build a table of cards as users add them to a collection
 - Connect both tables in a many to many relationship based on user input
-
-Future Features:
-- Dark mode
-- Export/Import via CSV
-- Ability to subdivide a collection into multiple decks of cards
-- Password reset
-- ~~Specify printing edition of cards~~ (Done)
-- Sort by table column
-- Split table into pages
-- Make Login and Registartion popups/overlays instead of individual pages
-- Switch to pulling prices from retailers directly to get more reliable prices
-- Make the error message for adding a specific card specify style in collection
-- Selecting which currency to display
-- Display total price of all cards
-- Search for and display backsides of transform and MDFC cards
-- Replace text descriptions of symbols with the correct images
